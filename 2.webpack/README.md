@@ -12,3 +12,8 @@ npm install webpack -S
 ```
 npm run build
 ```
+
+## 加载CSS
+```
+npm install style-loader css-loader -S
+```
