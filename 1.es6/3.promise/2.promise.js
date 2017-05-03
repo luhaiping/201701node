@@ -6,6 +6,7 @@
 // resolve 解决
 // reject 拒绝
 let fs = require('fs');
+let Promise = require('./Promise.js');
 let promise = new Promise(function(resolve,reject){
      fs.readFile('1.txt','utf8',function(err,data){
          if(err){//err有值表示此任务失败了
