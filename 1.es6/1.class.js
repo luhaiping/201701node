@@ -8,6 +8,25 @@ Person.prototype.getName = function(){
 //静态方法
 Person.add = function(a,b){return a+b}
 
+function Student(name, age) {
+    Person.call(this, name);
+    this.age = age;//继承了私有属性
+}
+//让子类的原型prototype等于父类的一个实例
+function create(prototype){
+    function Fn(){}
+    Fn.prototype = prototype;
+    return new Fn();
+}
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.constructor = Student;
+
+Student.prototype.getAge = function () {
+    console.log(this.age);
+};
+let s = new Student('zfpx2',8);
+s.getName();
+s.getAge();
 
 
 //ES6
@@ -40,6 +59,3 @@ class Student extends Person{
       console.log(this.age);
   }
 }*/
-let s = new Student('zfpx2',8);
-s.getName();
-s.getAge();
