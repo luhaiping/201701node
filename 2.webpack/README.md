@@ -33,3 +33,8 @@ npm install babel-preset-es2015 -S
 ```
 npm install webpack-dev-server -S
 ```
+
+## 自动产出webpack文件
+```
+npm install html-webpack-plugin -S
+```

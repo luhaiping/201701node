@@ -2,6 +2,7 @@
  *
  **/
 let path = require('path');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     //入口文件 打包的时候先找到这个文件，然后把这个文件以及它依赖的其它模块都打包到一个文件里去
     entry:'./src/index.js',
@@ -37,5 +38,10 @@ module.exports = {
     devServer:{
         //内容的根目录
         contentBase:'./build'
-    }
+    },
+    plugins:[
+        new HtmlWebpackPlugin({
+            template:'./src/index.html'
+        })
+    ]
 }
