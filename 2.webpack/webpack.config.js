@@ -32,5 +32,10 @@ module.exports = {
                loader:'url-loader?limit=8k'
            }
        ]
+    },
+    //配置开发服务器
+    devServer:{
+        //内容的根目录
+        contentBase:'./build'
     }
 }

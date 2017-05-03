@@ -25,6 +25,11 @@ npm install url-loader
 
 ## 把ES6编译成ES5
 ```
-npm install babel-loader -S
+npm install babel-core babel-loader -S
 npm install babel-preset-es2015 -S
+```
+
+## 安装webpack-dev-server
+```
+npm install webpack-dev-server -S
 ```
