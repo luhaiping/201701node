@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+
+</ul>
+<script>
+    /**
+     * $.ajax获取返回值有三种方法
+     * 1. success
+     * 2. then
+     * 3. done
+     */
+    function ajax(){
+
+    }
+   ajax({
+       url:'users.json',
+       type:'GET',
+       dataType:'json',
+   }).then(function(result){
+       console.log(result);
+   })
+</script>
+</body>
+</html>
