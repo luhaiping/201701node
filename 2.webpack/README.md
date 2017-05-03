@@ -17,3 +17,14 @@ npm run build
 ```
 npm install style-loader css-loader -S
 ```
+
+## 加载图片
+```
+npm install url-loader
+```
+
+## 把ES6编译成ES5
+```
+npm install babel-loader -S
+npm install babel-preset-es2015 -S
+```

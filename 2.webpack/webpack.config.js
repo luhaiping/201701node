@@ -17,10 +17,19 @@ module.exports = {
     module:{
        loaders:[
            {
+             test:/\.js$/,
+//babel-loader负责转义代码,可以把ES6代码转义成ES5
+             loader:'babel-loader'
+           },
+           {
                //加载模块(require,import)的时候，会用此正则匹配文件后缀，如果匹配上，则执行对应的加载器
                //多个加载器之间可以用!分隔开，执行的时候像流水线一下，从右向左执行
                test:/\.css$/,
                loader:'style-loader!css-loader'
+           },
+           {
+               test:/\.(jpg|png|gif)$/,
+               loader:'url-loader?limit=8k'
            }
        ]
     }
