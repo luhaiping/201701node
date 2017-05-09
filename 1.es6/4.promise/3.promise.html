@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .ball {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .ball1 {
+            background-color: red
+        }
+
+        .ball2 {
+            background-color: blue
+        }
+
+        .ball3 {
+            background-color: green
+        }
+    </style>
+</head>
+<body>
+<div class="ball ball1" style="margin-left:0"></div>
+<div class="ball ball2" style="margin-left:0"></div>
+<div class="ball ball3" style="margin-left:0"></div>
+<script>
+    let ball1 = document.querySelector('.ball1');
+    let ball2 = document.querySelector('.ball2');
+    let ball3 = document.querySelector('.ball3');
+    function move(ele, target) {
+        return new Promise(function (resolve) {
+            function _move(){
+                let $timer = setTimeout(function(){
+                    let marginLeft = parseInt(ele.style.marginLeft);
+                    if (marginLeft < target) {
+                        ele.style.marginLeft = (++marginLeft) + 'px';
+                        _move();
+                    }else{
+                        clearInterval($timer);
+                        resolve();
+                    }
+                },13)
+            }
+            _move();
+        });
+    }
+    move(ball1,100)
+        .then(function(){
+            return move(ball2,100);
+        })
+        .then(function(){
+        return move(ball3,100);
+    });
+</script>
+</body>
+</html>
