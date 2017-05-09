@@ -8,5 +8,16 @@ module.exports = {
         path: path.resolve('build'),
         //文件名
         filename:'bundle.js'
+    },
+    module: {
+        loaders:[
+            {
+                test:/\.js$/,//指定文件匹配模式
+                loader:'babel-loader'//调用babel把ES6代码转成ES5
+            },{
+              test:/\.(jpg|png|gif)$/,
+              loader:'url-loader'
+            }
+        ]
     }
 }

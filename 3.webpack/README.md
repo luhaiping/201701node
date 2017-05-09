@@ -17,4 +17,12 @@ npm install webpack webpack-dev-server -S
 
 ## 配置加载器
 - 加载图片 url-loader
+```
+npm install url-loader file-loader -S
+```
+
+```
+npm install babel-core babel-loader babel-preset-es2015 -S
+```
 - ES6 babel-loader
+  babel-core babel-loader babel-preset-es2015
