@@ -1,3 +1,4 @@
+require('./slider.less');
 export default class Slider{
     //向当前页面中插入一个slider
     render(){
