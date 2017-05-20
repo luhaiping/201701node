@@ -20,3 +20,7 @@ mongo
 use admin
 db.shutdownServer();
 ```
+5. 如何查看当前在哪个数据库下面
+```
+db
+```
