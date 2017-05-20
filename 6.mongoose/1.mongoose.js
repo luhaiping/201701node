@@ -35,8 +35,9 @@ let UserModel = mongoose.model('User',UserSchema);
  * 3. 回调函数
  * 更新的时候只会更新匹配到的第一条,
  * 因为修改前和修改后的值是一样的，则不实际更新
+ * {multi:true} 表示更新所有匹配到的记录
  */
-UserModel.update({username:'zfpx1'},{age:2},function(err,result){
+UserModel.update({username:'zfpx1'},{age:5},{multi:true},function(err,result){
     //{ ok: 1, nModified: 1, n: 1 }
     //{ ok: 1, nModified: 0, n: 1 }
     // { ok: 1, nModified:1, n: 1 }
