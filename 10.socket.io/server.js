@@ -3,6 +3,7 @@
  **/
 let express = require('express');
 let path = require('path');
+let Message = require('./model').Message;
 //express是一个函数，调用后会返回一个HTTP的监听函数
 let app = express();
 //把node_modules作为静态文件根目录
@@ -35,9 +36,14 @@ io.on('connection',function(socket){
             let toUser = result[1];
             //得到的私聊的内容
             let content = result[2];
+             socket.send({username,content,createAt:new Date().toLocaleString()});
             sockets[toUser].send({username,content,createAt:new Date().toLocaleString()});
          }else{
-             io.emit('message',{username,content:msg,createAt:new Date().toLocaleString()});
+             Message.create({username,content:msg},function(err,message){
+                 // _id username content createAt
+                 io.emit('message',message);
+             })
+
          }
      }else{//如果还没有赋过值，还是undefined
           username = msg;
@@ -60,5 +66,6 @@ server.listen(8080);
  *    2. 以后每次这个客户端再发言，那么就会认为是此用户名发的言
  * 3. 实现一个私聊
  * 4. 实现消息持久化
+ * 5. 在页面加载完成后显示最近20条历史消息
  *
  */
