@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+    <style>
+        .user{
+            color:blue;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div class="container" style="margin-top:30px">
@@ -14,7 +20,7 @@
                     <h3 class="text-center">欢迎光临珠峰聊天室</h3>
                 </div>
                 <div class="panel-body">
-                    <ul id="messages" class="list-group">
+                    <ul id="messages" class="list-group" onclick="selectUser(event)">
 
                     </ul>
                 </div>
@@ -49,7 +55,7 @@
     socket.on('message',function(msgObj){
         let messagesUl = document.querySelector('#messages');
         let li = document.createElement('li');
-        li.innerHTML = `${msgObj.username}:${msgObj.content} <span class="pull-right">${msgObj.createAt}</span>`;
+        li.innerHTML = `<span class="user">${msgObj.username}</span>:${msgObj.content} <span class="pull-right">${msgObj.createAt}</span>`;
         li.className = 'list-group-item';
         messagesUl.appendChild(li);
     });
@@ -60,6 +66,13 @@
         let content  = contentInput.value;//获取输入框的值
         socket.send(content);//把消息发送给服务器
         contentInput.value = '';
+    }
+    function selectUser(event){
+        if(event.target.className == 'user'){
+            let username = event.target.innerText;
+            let contentInput = document.querySelector('#content');
+            contentInput.value = `@${username} `;
+        }
     }
 </script>
 </html>

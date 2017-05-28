@@ -18,7 +18,8 @@ let server = require('http').createServer(app);
 let io = require('socket.io')(server);
 //监听客户端的连接，当连接到来的时候执行对应的回调函数
 //socket对象是每个客户端会专属有一个
-
+//存放着每个客户端的用户名和socket对象对应关系
+let sockets = {};
 io.on('connection',function(socket){
     //此变量代表当前用户的用户名
     let username;
@@ -26,9 +27,21 @@ io.on('connection',function(socket){
    socket.on('message',function(msg){
      if(username){//如果已经赋过值了
 //广播给所有的人
-         io.emit('message',{username,content:msg,createAt:new Date().toLocaleString()});
+         let reg = /@([^\s]+) (.+)/;
+         let result = msg.match(reg);
+         if(result){//私聊
+             //得到了私聊的对方的用户名
+            let toUser = result[1];
+            //得到的私聊的内容
+            let content = result[2];
+            sockets[toUser].send({username,content,createAt:new Date().toLocaleString()});
+         }else{
+             io.emit('message',{username,content:msg,createAt:new Date().toLocaleString()});
+         }
      }else{//如果还没有赋过值，还是undefined
           username = msg;
+          //建立用户名和socket对象的对应关系
+          sockets[username] = socket;
          //广播给所有的人
          io.emit('message',{username:'系统',content:`欢迎${username}来到聊天室`,createAt:new Date().toLocaleString()});
      }
