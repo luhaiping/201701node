@@ -5,6 +5,8 @@ let express = require('express');
 let path = require('path');
 //express是一个函数，调用后会返回一个HTTP的监听函数
 let app = express();
+//把node_modules作为静态文件根目录
+app.use(express.static(path.resolve('../node_modules')));
 //当客户端通过GET方式访问/路径的时候，服务器返回index.html文件
 app.get('/',function(req,res){
   res.sendFile(path.resolve('index.html'));
