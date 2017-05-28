@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+//引入socket.io.js文件之后，会在window对象增加一个 io的属性
+//调用IO可以连接服务器并返回连接对象
+    let socket = io();// new WebSocket('/);
+    //socket.onopen
+   //监听 连接成功事件
+    socket.on('connect',function(){
+     console.log('连接成功');
+     socket.send('你好');
+    });
+    socket.on('message',function(msg){
+       console.log(msg);
+    });
+</script>
+</html>
