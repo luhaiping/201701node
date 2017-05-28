@@ -21,12 +21,16 @@ let io = require('socket.io')(server);
 io.on('connection',function(socket){
     //当服务器端接收到客户端的消息之后执行回调函数 msg就是对应的消息
    socket.on('message',function(msg){
-       console.log(msg);
-       socket.send('服务器说:'+msg);
+     //广播给所有的人
+     io.emit('message',msg);
    });
 });
 server.listen(8080);
 /**
  * 1. 实现匿名聊天
+ *    1. 给按钮绑定事件 或者给 表单绑定事件
+ *    2. 在提交表单的时候1取消默认事件，2. 获取消息内容发送给服务器
+ *    3. 服务器接收到客户端发过来的消息，广播给所有的客户端
+ *    4. 其它客户端收到消息后会把放到消息列表里显示
  *
  */
