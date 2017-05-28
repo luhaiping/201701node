@@ -78,6 +78,12 @@ io.on('connection',function(socket){
         socket.join(roomName);
         currentRoom = roomName;
    });
+   //监听客户端想删除某个消息的事件
+   socket.on('delete',function(id){
+      Message.remove({_id:id},function(err,result){
+        io.emit('deleted',id);
+      });
+   });
 });
 server.listen(8080);
 /**

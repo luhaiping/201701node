@@ -24,7 +24,7 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <ul id="messages" class="list-group" onclick="selectUser(event)">
+                    <ul id="messages" class="list-group" onclick="handleClick(event)">
 
                     </ul>
                 </div>
@@ -58,13 +58,14 @@
     });
 
     function formatMsg(msgObj){
-        return `<span class="user">${msgObj.username}</span>:${msgObj.content} <span class="pull-right">${new Date(msgObj.createAt).toLocaleString()}</span>`
+        return `<span class="user">${msgObj.username}</span>:${msgObj.content} <button class="btn btn-danger btn-sm btndelete" data-id="${msgObj._id}">删除</button> <span class="pull-right">${new Date(msgObj.createAt).toLocaleString()}</span>`
     }
 
     //客户端监听服务器的消息
     socket.on('message',function(msgObj){
         let messagesUl = document.querySelector('#messages');
         let li = document.createElement('li');
+        li.id = msgObj._id;
         li.innerHTML = formatMsg(msgObj);
         li.className = 'list-group-item';
         messagesUl.appendChild(li);
@@ -77,17 +78,21 @@
         socket.send(content);//把消息发送给服务器
         contentInput.value = '';
     }
-    function selectUser(event){
-        if(event.target.className == 'user'){
+    function handleClick(event){
+        if(event.target.className == 'user'){//点击用户名的
             let username = event.target.innerText;
             let contentInput = document.querySelector('#content');
             contentInput.value = `@${username} `;
+        }else if(/(^| +)btndelete($| +)/.test(event.target.className)){
+            // data-xxx="1"    .dataset.xxx
+            let id = event.target.dataset.id;
+            socket.emit('delete',id);
         }
     }
     //获得所有的消息
     socket.on('allMessages',function(messages){
         messages = messages.map(message=>(
-            `<li class="list-group-item">${formatMsg(message)}</li>`
+            `<li class="list-group-item" id="${message._id}">${formatMsg(message)}</li>`
         ));
         let html = messages.join('');
         let messagesUl = document.querySelector('#messages');
@@ -99,5 +104,9 @@
         //我告诉服务器我要进房间
        socket.emit('join',roomName);
     }
+    socket.on('deleted',function(id){
+        let li = document.getElementById(id);
+        li.parentNode.removeChild(li);
+    });
 </script>
 </html>
