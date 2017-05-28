@@ -53,6 +53,14 @@ io.on('connection',function(socket){
          io.emit('message',{username:'系统',content:`欢迎${username}来到聊天室`,createAt:new Date().toLocaleString()});
      }
    });
+   //服务器监听到消息 客户端想获取最近的20条数据
+   socket.on('getAllMessages',function(){
+       //查询出最近的20条数据并发给客户端
+        Message.find().sort({createAt:-1}).limit(20).exec(function(err,messages){
+           messages.reverse();//显示的时候还是要从旧往新显示
+           socket.emit('allMessages',messages);
+        })
+   })
 });
 server.listen(8080);
 /**

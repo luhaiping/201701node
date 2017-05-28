@@ -1,4 +1,5 @@
 let mongoose = require('mongoose');
+mongoose.Promise = Promise;
 //1. 连接数据库
 mongoose.connect('mongodb://localhost/201701node');
 //2.定义Schema
