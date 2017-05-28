@@ -24,6 +24,8 @@ let sockets = {};
 io.on('connection',function(socket){
     //此变量代表当前用户的用户名
     let username;
+    //当前的房间名
+    let currentRoom;
     //当服务器端接收到客户端的消息之后执行回调函数 msg就是对应的消息
    socket.on('message',function(msg){
      if(username){//如果已经赋过值了
@@ -41,7 +43,13 @@ io.on('connection',function(socket){
          }else{
              Message.create({username,content:msg},function(err,message){
                  // _id username content createAt
-                 io.emit('message',message);
+                 //如果此用户在某个房间内
+                 if(currentRoom){
+                     //那么广播的时候会向currentRoom中进行广播
+                    io.in(currentRoom).emit('message',message);
+                 }else{
+                     io.emit('message',message);
+                 }
              })
 
          }
@@ -61,6 +69,15 @@ io.on('connection',function(socket){
            socket.emit('allMessages',messages);
         })
    })
+    //监听客户端想加入房间的事件
+   socket.on('join',function(roomName){
+        if(currentRoom){//如果此客户端原来在某个房间内，则让他离开那个房间
+            socket.leave(currentRoom);
+        }
+       //让此socket对应进入此房间
+        socket.join(roomName);
+        currentRoom = roomName;
+   });
 });
 server.listen(8080);
 /**
@@ -75,5 +92,7 @@ server.listen(8080);
  * 3. 实现一个私聊
  * 4. 实现消息持久化
  * 5. 在页面加载完成后显示最近20条历史消息
+ * 6. 建立房间
+ *
  *
  */

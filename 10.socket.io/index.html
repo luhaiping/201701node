@@ -17,7 +17,11 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="text-center">欢迎光临珠峰聊天室</h3>
+                    <h3 class="text-center">
+                        欢迎光临珠峰聊天室
+                        <button class="btn btn-danger" onclick="joinRoom('red')">红房间</button>
+                        <button class="btn btn-success" onclick="joinRoom('green')">绿房间</button>
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <ul id="messages" class="list-group" onclick="selectUser(event)">
@@ -89,5 +93,11 @@
         let messagesUl = document.querySelector('#messages');
         messagesUl.innerHTML = html;
     });
+
+    //加入房间
+    function joinRoom(roomName){
+        //我告诉服务器我要进房间
+       socket.emit('join',roomName);
+    }
 </script>
 </html>
