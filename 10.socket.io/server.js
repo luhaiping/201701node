@@ -18,11 +18,20 @@ let server = require('http').createServer(app);
 let io = require('socket.io')(server);
 //监听客户端的连接，当连接到来的时候执行对应的回调函数
 //socket对象是每个客户端会专属有一个
+
 io.on('connection',function(socket){
+    //此变量代表当前用户的用户名
+    let username;
     //当服务器端接收到客户端的消息之后执行回调函数 msg就是对应的消息
    socket.on('message',function(msg){
-     //广播给所有的人
-     io.emit('message',msg);
+     if(username){//如果已经赋过值了
+//广播给所有的人
+         io.emit('message',{username,content:msg,createAt:new Date().toLocaleString()});
+     }else{//如果还没有赋过值，还是undefined
+          username = msg;
+         //广播给所有的人
+         io.emit('message',{username:'系统',content:`欢迎${username}来到聊天室`,createAt:new Date().toLocaleString()});
+     }
    });
 });
 server.listen(8080);
@@ -32,5 +41,8 @@ server.listen(8080);
  *    2. 在提交表单的时候1取消默认事件，2. 获取消息内容发送给服务器
  *    3. 服务器接收到客户端发过来的消息，广播给所有的客户端
  *    4. 其它客户端收到消息后会把放到消息列表里显示
+ * 2. 实现具名聊天
+ *    1. 当客户端连接上服务器之后，第一次说的话会作为他的用户名。
+ *    2. 以后每次这个客户端再发言，那么就会认为是此用户名发的言
  *
  */
