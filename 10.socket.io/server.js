@@ -26,3 +26,7 @@ io.on('connection',function(socket){
    });
 });
 server.listen(8080);
+/**
+ * 1. 实现匿名聊天
+ *
+ */
