@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iframe流</title>
+</head>
+<body>
+<div id="clock"></div>
+<iframe src="http://localhost:8080/clock2" height="0" width="0" frameborder="0"></iframe>
+<script>
+    function changeTime(time){
+        document.querySelector('#clock').innerHTML = time;
+    }
+</script>
+</body>
+</html>
