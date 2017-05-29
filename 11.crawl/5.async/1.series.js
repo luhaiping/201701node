@@ -5,9 +5,11 @@ let async = require('async');
 console.time('cost')
 //数组中的异步任务会依次执行
 function series(tasks,finalCallback){
+  let index =0;
   function next(){
-
+      tasks[index++](next);
   }
+  next();
 }
 series([
     function(next){
