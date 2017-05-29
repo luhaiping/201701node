@@ -1,4 +1,4 @@
-let debug = require('debug');
+//let debug = require('debug');
 /**
  * debug的作用类似于console.log
  *
@@ -8,7 +8,12 @@ let debug = require('debug');
 //debug受环境的时间，有时候打印，有时候不打印
 //日志记录器的名字
 //loggerA执行的时候会去读取环境变量中 DEBUG 的值，如果它跟当前目录记录器名字匹配，则在控制台输出
-
+function debug(name){
+    return function(msg){
+        if(process.env.DEBUG == name)
+           console.log(msg);
+    }
+}
 let loggerA = debug('loggerA');
 loggerA('loggerA');
 
@@ -24,3 +29,5 @@ loggerB('loggerB');
 /*
 var loggerB = debug('loggerA');
 loggerB('loggerC');*/
+//取出环境变量中name的值
+//console.log(process.env.name);
