@@ -9,6 +9,7 @@ request({url:'http://top.baidu.com/category?c=1&fr=topindex',encoding:null},func
     body = iconv.decode(body,'gbk');
     let $ = cheerio.load(body);
     $('.hd .title a').each(function(index,item){
+        console.log(item);
         let $this = $(item);
         let category = {
             name:$this.text(),
